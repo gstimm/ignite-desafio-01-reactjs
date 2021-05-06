@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import '../styles/tasklist.scss'
 
-import { FiTrash, FiCheckSquare } from 'react-icons/fi'
+import { FiTrash2, FiCheckSquare } from 'react-icons/fi'
 
 interface Task {
   id: number;
@@ -13,6 +13,7 @@ interface Task {
 export function TaskList() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTaskTitle, setNewTaskTitle] = useState('');
+  const [showTrashBlock, setShowTrashBlock] = useState(false);
 
   function handleCreateNewTask() {
     if (!newTaskTitle) {
@@ -44,6 +45,24 @@ export function TaskList() {
     setTasks(filteredTasks);
   }
 
+  function handleRemoveAllTasksComplete() {
+    const filteredNotCompleteTasks = tasks.filter(task => task.isComplete !== true);
+
+    setTasks(filteredNotCompleteTasks);
+  }
+
+  function handleRemoveAllTasks() {
+    setTasks([]);
+  }
+
+  useEffect(() => {
+    if (tasks.length < 1 && showTrashBlock === true) {
+      setShowTrashBlock(false);
+    } else if (tasks.length >= 1 && showTrashBlock === false) {
+      setShowTrashBlock(true);
+    }
+  }, [tasks]);
+
   return (
     <section className="task-list container">
       <header>
@@ -63,6 +82,24 @@ export function TaskList() {
       </header>
 
       <main>
+        {
+          showTrashBlock ?
+          <div className="input-trash-group">
+            <div>
+              <button type="button" onClick={() => handleRemoveAllTasksComplete()}>
+                <FiTrash2 size={16}/> 
+              </button>
+              <span>Limpar concluídas</span>
+            </div>
+            <div>
+              <button type="button" onClick={() => handleRemoveAllTasks()}>
+                <FiTrash2 size={16}/> 
+              </button>
+              <span>Limpar toda lista</span>
+            </div>
+          </div>
+            : null
+        }
         <ul>
           {tasks.map(task => (
             <li key={task.id}>
@@ -80,7 +117,7 @@ export function TaskList() {
               </div>
 
               <button type="button" data-testid="remove-task-button" onClick={() => handleRemoveTask(task.id)}>
-                <FiTrash size={16}/>
+                <FiTrash2 size={16}/>
               </button>
             </li>
           ))}

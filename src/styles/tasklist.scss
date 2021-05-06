@@ -64,6 +64,56 @@ section.task-list {
   main {
     margin-top: 3rem;
 
+    .input-trash-group {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      background: #fff;
+      gap: 1rem;
+
+      div {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+
+        button {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          background: var(--light-red);
+          color: var(--text-title);
+          border: 0;
+          border-color: transparent;
+          border-radius: 8px;
+          padding: 8px;
+          margin-left: 5px;
+
+          transition: filter 0.2s;
+
+          &:hover {
+            filter: brightness(0.9);
+          }
+
+          svg {
+            color: #EBEBEB;
+
+            &:hover {
+              filter: brightness(0.9);
+            }
+          }
+
+        }
+
+        span {
+          color: var(--text-light);
+        }
+      }
+    }
+
     ul {
       list-style: none;
   
@@ -107,7 +157,7 @@ section.task-list {
 
               &:checked {
                 & ~ .checkmark {
-                  background-color: var(--blue);
+                  background-color: var(--green);
                 }
 
                 & ~ .checkmark:after {
@@ -146,7 +196,7 @@ section.task-list {
           border: 0;
 
           svg {
-            color: var(--red);
+            color: var(--light-red);
           }
 
           &:hover {
